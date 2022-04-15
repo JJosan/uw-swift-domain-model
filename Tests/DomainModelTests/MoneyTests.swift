@@ -81,21 +81,145 @@ class MoneyTests: XCTestCase {
     XCTAssert(total.currency == "GBP")
   }
 
-    static var allTests = [
-        ("testCanICreateMoney", testCanICreateMoney),
-
-        ("testUSDtoGBP", testUSDtoGBP),
-        ("testUSDtoEUR", testUSDtoEUR),
-        ("testUSDtoCAN", testUSDtoCAN),
-        ("testGBPtoUSD", testGBPtoUSD),
-        ("testEURtoUSD", testEURtoUSD),
-        ("testCANtoUSD", testCANtoUSD),
-        ("testUSDtoEURtoUSD", testUSDtoEURtoUSD),
-        ("testUSDtoGBPtoUSD", testUSDtoGBPtoUSD),
-        ("testUSDtoCANtoUSD", testUSDtoCANtoUSD),
+    // my tests
+    func testSubtractUSDtoGBP() {
+        let total = tenUSD.subtract(fiveGBP)
+        XCTAssert(total.amount == 0)
+        XCTAssert(total.currency == "GBP")
+      }
         
-        ("testAddUSDtoUSD", testAddUSDtoUSD),
-        ("testAddUSDtoGBP", testAddUSDtoGBP),
-    ]
+      func testSubtractUSDtoUSD() {
+        let total = tenUSD.subtract(tenUSD)
+        XCTAssert(total.amount == 0)
+        XCTAssert(total.currency == "USD")
+      }
+        
+      func testSubtractEURtoUSD() {
+        let total = fifteenEUR.subtract(tenUSD)
+        XCTAssert(total.amount == 0)
+        XCTAssert(total.currency == "USD")
+      }
+        
+      func testGBPtoEUR() {
+        let eur = fiveGBP.convert("EUR")
+        XCTAssert(eur.currency == "EUR")
+        XCTAssert(eur.amount == 15)
+      }
+        
+      func testGBPtoCAN() {
+        let can = fiveGBP.convert("CAN")
+        XCTAssert(can.currency == "CAN")
+        XCTAssert(can.amount == 12)
+      }
+
+      func testEURtoGBP() {
+        let gbp = fifteenEUR.convert("GBP")
+        XCTAssert(gbp.currency == "GBP")
+        XCTAssert(gbp.amount == 5)
+      }
+
+      func testEURtoCAN() {
+        let can = fifteenEUR.convert("CAN")
+        XCTAssert(can.currency == "CAN")
+        XCTAssert(can.amount == 12)
+      }
+        
+      func testCANtoGBP() {
+        let gbp = fifteenCAN.convert("GBP")
+        XCTAssert(gbp.currency == "GBP")
+        XCTAssert(gbp.amount == 6)
+      }
+      
+      func testCANtoEUR() {
+        let eur = fifteenCAN.convert("EUR")
+        XCTAssert(eur.currency == "EUR")
+        XCTAssert(eur.amount == 18)
+      }
+
+      func testGBPtoUSDtoGBP() {
+          let usd = fiveGBP.convert("USD")
+          let gbp = usd.convert("GBP")
+          XCTAssert(fiveGBP.amount == gbp.amount)
+          XCTAssert(fiveGBP.currency == gbp.currency)
+      }
+        
+      func testGBPtoEURtoGBP() {
+          let eur = fiveGBP.convert("EUR")
+          let gbp = eur.convert("GBP")
+          XCTAssert(fiveGBP.amount == gbp.amount)
+          XCTAssert(fiveGBP.currency == gbp.currency)
+      }
+        
+      func testEURtoUSDtoEUR() {
+          let usd = fifteenEUR.convert("USD")
+          let eur = usd.convert("EUR")
+          XCTAssert(fifteenEUR.amount == eur.amount)
+          XCTAssert(fifteenEUR.currency == eur.currency)
+      }
+
+      func testEURtoGBPtoEUR() {
+          let gbp = fifteenEUR.convert("GBP")
+          let eur = gbp.convert("EUR")
+          XCTAssert(fifteenEUR.amount == eur.amount)
+          XCTAssert(fifteenEUR.currency == eur.currency)
+      }
+        
+      func testCANtoUSDtoCAN() {
+          let usd = fifteenCAN.convert("USD")
+          let can = usd.convert("CAN")
+          XCTAssert(fifteenCAN.amount == can.amount)
+          XCTAssert(fifteenCAN.currency == can.currency)
+      }
+        
+      func testCANtoGBPtoCAN() {
+          let gbp = fifteenCAN.convert("GBP")
+          let can = gbp.convert("CAN")
+          XCTAssert(fifteenCAN.amount == can.amount)
+          XCTAssert(fifteenCAN.currency == can.currency)
+      }
+
+      func testCANtoEURtoCAN() {
+          let eur = fifteenCAN.convert("EUR")
+          let can = eur.convert("CAN")
+          XCTAssert(fifteenCAN.amount == can.amount)
+          XCTAssert(fifteenCAN.currency == can.currency)
+      }
+          
+
+        static var allTests = [
+            ("testCanICreateMoney", testCanICreateMoney),
+            
+            ("testSubtractUSDtoGBP", testSubtractUSDtoGBP),
+            ("testSubtractUSDtoUSD", testUSDtoGBP),
+            ("testSubtractEURtoUSD", testSubtractEURtoUSD),
+
+            ("testUSDtoGBP", testUSDtoGBP),
+            ("testUSDtoEUR", testUSDtoEUR),
+            ("testUSDtoCAN", testUSDtoCAN),
+            ("testGBPtoUSD", testGBPtoUSD),
+            ("testEURtoUSD", testEURtoUSD),
+            ("testCANtoUSD", testCANtoUSD),
+            ("testUSDtoEURtoUSD", testUSDtoEURtoUSD),
+            ("testUSDtoGBPtoUSD", testUSDtoGBPtoUSD),
+            ("testUSDtoCANtoUSD", testUSDtoCANtoUSD),
+            ("testAddUSDtoUSD", testAddUSDtoUSD),
+            ("testAddUSDtoGBP", testAddUSDtoGBP),
+            
+            ("testGBPtoEUR", testGBPtoEUR),
+            ("testGBPtoCAN", testGBPtoCAN),
+            ("testEURtoGBP", testEURtoGBP),
+            ("testEURtoCAN", testEURtoCAN),
+            ("testCANtoGBP", testCANtoGBP),
+            ("testCANtoEUR", testCANtoEUR),
+
+            ("testGBPtoUSDtoGBP", testGBPtoUSDtoGBP),
+            ("testGBPtoEURtoGBP", testGBPtoEURtoGBP),
+            ("testEURtoUSDtoEUR", testEURtoUSDtoEUR),
+            ("testEURtoGBPtoEUR", testEURtoGBPtoEUR),
+            ("testCANtoUSDtoCAN", testCANtoUSDtoCAN),
+            ("testCANtoGBPtoCAN", testCANtoGBPtoCAN),
+            ("testCANtoEURtoCAN", testCANtoEURtoCAN)
+            ]
+
 }
 
